@@ -14,17 +14,19 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class IPICT extends JFrame implements ActionListener {
-    private JTextField file1, file2;
+    private JTextField field1, field2;
     private JButton browseButton1, browseButton2, compareButton;
     private JLabel header, files, info;
     private JTextArea area;
     private JScrollPane scroll;
     private JPanel panel;
     private Graphics g;
-    private JFileChooser fileChooser1, fileChooser2;
+    private JFileChooser fileChooser;
     
 
     
@@ -56,9 +58,9 @@ public class IPICT extends JFrame implements ActionListener {
         c.gridy = 1;
         pane.add(files,c);
         
-        file1 = new JTextField(20);
+        field1 = new JTextField(20);
         c.gridx = 1;
-        pane.add(file1,c);
+        pane.add(field1 ,c);
         
         browseButton1 = new JButton("Blader");
         c.fill = GridBagConstraints.CENTER;
@@ -66,9 +68,9 @@ public class IPICT extends JFrame implements ActionListener {
         pane.add(browseButton1, c);
         browseButton1.addActionListener(this);
         
-        file2 = new JTextField(20);
+        field2 = new JTextField(20);
         c.gridx = 3; 
-        pane.add(file2, c);
+        pane.add(field2, c);
         
         browseButton2 = new JButton("Blader");
         c.fill = GridBagConstraints.CENTER;
@@ -116,8 +118,63 @@ public class IPICT extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
         Object buttonPressed = event.getSource();
+        File file;
+	int reply;
+        fileChooser = new JFileChooser();
+	//BufferedReader infile1, infile2;  <-- in vergelijkmethode
         
-        
+        if (browseButton1 == buttonPressed){
+            reply = fileChooser.showOpenDialog(this);
+            String line;
+            if(reply == JFileChooser.APPROVE_OPTION){
+                file = fileChooser.getSelectedFile();
+		field1.setText(file.getAbsolutePath());
+            } 
+        } else if (browseButton2 == buttonPressed){
+            reply = fileChooser.showOpenDialog(this);
+            String line;
+            if(reply == JFileChooser.APPROVE_OPTION){
+                file = fileChooser.getSelectedFile();
+		field2.setText(file.getAbsolutePath());
+            } 
+        } else if (compareButton == buttonPressed){
+            if (field1.getText() == null || field2.getText() == null){
+                JOptionPane.showMessageDialog(null, "Voer twee bestanden in.");
+            }else try{
+                Comparison analyse = new Comparison(field1.getText(), field2.getText());
+                if(analyse.getErrorMsg().equals("")){
+                    area.setText("Bestanden zijn gelijk");
+                }else {
+                    area.setText(analyse.getErrorMsg());
+                    Graphics g = panel.getGraphics();
+                    for ( int i = 0; i < analyse.getErrorLocations().length(); i++){
+                        switch (analyse.getErrorLocations().charAt(i)){
+                            case 0:
+                                g.setColor(Color.black);
+                                break;
+                            case 1:
+                                g.setColor(Color.blue);
+                                break;
+                            case 2:
+                                g.setColor(Color.green);
+                                break;
+                            case 3:
+                                g.setColor(Color.red);
+                                break;
+                            case 4:
+                                g.setColor(Color.pink);
+                                break;
+                        }
+                        g.drawLine(i, 0, i, 50);
+                    }
+                }
+                
+                    
+            } catch (NotIPIException ex) {
+                JOptionPane.showMessageDialog(null, "Corrupt bestand");
+            }
+        }
     }
+    
 }
 
