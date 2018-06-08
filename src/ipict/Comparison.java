@@ -47,19 +47,17 @@ public class Comparison {
                     }  
                 } else {
                     eLocations += Integer.toString(0);
-            }
-        }   
+                }
+            } 
+            errorMsg = eMsg;
+            errorLocations = eLocations;
         }catch (FileNotFoundException e){
             JOptionPane.showMessageDialog(null, "Bestand niet gevonden");
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Kan bestand niet lezen");
         } catch(ArrayIndexOutOfBoundsException e){
             throw new NotIPIException();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Onbekende fout");
         }
-        errorMsg = eMsg;
-        errorLocations = eLocations;
     }
     
     public String getErrorMsg(){

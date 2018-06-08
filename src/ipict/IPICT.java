@@ -106,8 +106,7 @@ public class IPICT extends JFrame implements ActionListener {
         c.gridwidth = 3;
         c.insets = new Insets(10,10,10,10);
         c.gridy = 4;
-        add(panel, c);
-		
+        add(panel, c);		
     }
 
     public void actionPerformed(ActionEvent event) {
@@ -131,23 +130,26 @@ public class IPICT extends JFrame implements ActionListener {
 		field2.setText(file.getAbsolutePath());
             } 
         } else if (compareButton == buttonPressed){
-            if (field1.getText() == null || field2.getText() == null){
+            if (field1.getText().equals("") || field2.getText().equals("")){
                 JOptionPane.showMessageDialog(null, "Voer twee bestanden in.");
-            }else try{
+            }
+            try{
                 Comparison comp = new Comparison(field1.getText(), field2.getText());
-                if(comp.getErrorMsg().equals("")){
-                    area.setText("Bestanden zijn gelijk");
+                if(comp.getErrorLocations().matches("[0]+" )){
+                    area.setText("Bestanden zijn hetzelfde");
                 }else {
                     area.setText(comp.getErrorMsg());
                     drawErrorGraph(comp);
                 }                
             } catch (NotIPIException ex) {
                 JOptionPane.showMessageDialog(null, "Corrupt bestand");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Onbekende fout");
             }
         }
     }
 
-    private void drawErrorGraph(Comparison comp){
+    public void drawErrorGraph(Comparison comp){
         Graphics g = panel.getGraphics();
         int l = comp.getErrorLocations().length();
         for (int i = 0; i < l; i++){
