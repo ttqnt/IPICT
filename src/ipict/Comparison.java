@@ -35,10 +35,6 @@ public class Comparison {
                 if(!line1.equals(line2)){
                     columns1 = line1.split("\t");
                     columns2 = line2.split("\t");
-                    System.out.println(columns1.length);
-                    if(columns1.length != 4 || columns1.length != 4){
-                        throw new NotIPIException();
-                    }
                     for ( int i = 0; i < 4; i++){
                         if(!columns1[i].equals(columns2[i])){
                             eMsg += "Fout op regel: ";
@@ -47,12 +43,12 @@ public class Comparison {
                             eMsg += Integer.toString(i+1);
                             eMsg += "\n";
                             eLocations += Integer.toString(i+1);
-                        }else {
-                            eLocations += Integer.toString(0);
                         }
-                    }
-                }
-            }   
+                    }  
+                } else {
+                    eLocations += Integer.toString(0);
+            }
+        }   
         }catch (FileNotFoundException e){
             JOptionPane.showMessageDialog(null, "Bestand niet gevonden");
         } catch (IOException e) {
@@ -64,6 +60,7 @@ public class Comparison {
         }
         errorMsg = eMsg;
         errorLocations = eLocations;
+        System.out.println(eLocations);
     }
     
     public String getErrorMsg(){

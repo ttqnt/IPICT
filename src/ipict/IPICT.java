@@ -141,31 +141,32 @@ public class IPICT extends JFrame implements ActionListener {
             if (field1.getText() == null || field2.getText() == null){
                 JOptionPane.showMessageDialog(null, "Voer twee bestanden in.");
             }else try{
-                Comparison analyse = new Comparison(field1.getText(), field2.getText());
-                if(analyse.getErrorMsg().equals("")){
+                Comparison comp = new Comparison(field1.getText(), field2.getText());
+                if(comp.getErrorMsg().equals("")){
                     area.setText("Bestanden zijn gelijk");
                 }else {
-                    area.setText(analyse.getErrorMsg());
+                    area.setText(comp.getErrorMsg());
                     Graphics g = panel.getGraphics();
-                    for ( int i = 0; i < analyse.getErrorLocations().length(); i++){
-                        switch (analyse.getErrorLocations().charAt(i)){
-                            case 0:
+                    int l = comp.getErrorLocations().length();
+                    for (int i = 0; i < l; i++){
+                        switch (comp.getErrorLocations().charAt(i)){
+                            case '0':
                                 g.setColor(Color.black);
                                 break;
-                            case 1:
+                            case '1':
                                 g.setColor(Color.blue);
                                 break;
-                            case 2:
+                            case '2':
                                 g.setColor(Color.green);
                                 break;
-                            case 3:
+                            case '3':
                                 g.setColor(Color.red);
                                 break;
-                            case 4:
+                            case '4':
                                 g.setColor(Color.pink);
                                 break;
                         }
-                        g.drawLine(i, 0, i, 50);
+                        g.fillRect(25+i*(l), 20, l, 36);
                     }
                 }
                 
