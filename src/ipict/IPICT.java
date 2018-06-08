@@ -14,8 +14,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 public class IPICT extends JFrame implements ActionListener {
@@ -28,16 +26,13 @@ public class IPICT extends JFrame implements ActionListener {
     private Graphics g;
     private JFileChooser fileChooser;
     
-
-    
     public static void main(String[] args) {
     IPICT analyse = new IPICT();
     analyse.setTitle("IPI Compare Tool");
     analyse.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     analyse.createGUI((analyse.getContentPane()));
     analyse.pack();
-    analyse.setVisible(true);
-        
+    analyse.setVisible(true);        
     }
     
     private void createGUI(Container pane) {
@@ -103,8 +98,7 @@ public class IPICT extends JFrame implements ActionListener {
         scroll = new JScrollPane (area);
 	scroll.setVerticalScrollBarPolicy (ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
 	scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        pane.add(scroll,c);
-        
+        pane.add(scroll,c);        
         
         panel = new JPanel();
         panel.setPreferredSize(new Dimension(450, 100));
@@ -121,7 +115,6 @@ public class IPICT extends JFrame implements ActionListener {
         File file;
 	int reply;
         fileChooser = new JFileChooser();
-	//BufferedReader infile1, infile2;  <-- in vergelijkmethode
         
         if (browseButton1 == buttonPressed){
             reply = fileChooser.showOpenDialog(this);

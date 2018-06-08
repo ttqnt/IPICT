@@ -60,7 +60,6 @@ public class Comparison {
         }
         errorMsg = eMsg;
         errorLocations = eLocations;
-        System.out.println(eLocations);
     }
     
     public String getErrorMsg(){
