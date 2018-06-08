@@ -146,36 +146,37 @@ public class IPICT extends JFrame implements ActionListener {
                     area.setText("Bestanden zijn gelijk");
                 }else {
                     area.setText(comp.getErrorMsg());
-                    Graphics g = panel.getGraphics();
-                    int l = comp.getErrorLocations().length();
-                    for (int i = 0; i < l; i++){
-                        switch (comp.getErrorLocations().charAt(i)){
-                            case '0':
-                                g.setColor(Color.black);
-                                break;
-                            case '1':
-                                g.setColor(Color.blue);
-                                break;
-                            case '2':
-                                g.setColor(Color.green);
-                                break;
-                            case '3':
-                                g.setColor(Color.red);
-                                break;
-                            case '4':
-                                g.setColor(Color.pink);
-                                break;
-                        }
-                        g.fillRect(25+i*(l), 20, l, 36);
-                    }
-                }
-                
-                    
+                    drawErrorGraph(comp);
+                }                
             } catch (NotIPIException ex) {
                 JOptionPane.showMessageDialog(null, "Corrupt bestand");
             }
         }
     }
-    
+
+    private void drawErrorGraph(Comparison comp){
+        Graphics g = panel.getGraphics();
+        int l = comp.getErrorLocations().length();
+        for (int i = 0; i < l; i++){
+            switch (comp.getErrorLocations().charAt(i)){
+                case '0':
+                    g.setColor(Color.black);
+                    break;
+                case '1':
+                    g.setColor(Color.blue);
+                    break;
+                case '2':
+                    g.setColor(Color.green);
+                    break;
+                case '3':
+                     g.setColor(Color.red);
+                    break;
+                case '4':
+                    g.setColor(Color.pink);
+                    break;
+                        }
+                g.fillRect(25+i*(l), 20, l, 36);
+        }
+    }
 }
 
